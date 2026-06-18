@@ -1,0 +1,79 @@
+<div *ngIf="!stats" class="animate-pulse space-y-4">
+  <div class="h-8 bg-gray-200 rounded w-48"></div>
+  <div class="grid grid-cols-4 gap-4">
+    <div *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" class="h-24 bg-gray-200 rounded-2xl"></div>
+  </div>
+</div>
+
+<div *ngIf="stats" class="space-y-6">
+  <div>
+    <h1 class="page-title">Platform Statistics</h1>
+    <p class="text-sm text-gray-500 mt-0.5">Real-time overview of the AdSphere platform</p>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <app-stat-card label="Total Users" [value]="stats.totalUsers" icon="users" color="indigo"></app-stat-card>
+    <app-stat-card label="Total Websites" [value]="stats.totalWebsites" icon="globe" color="cyan"></app-stat-card>
+    <app-stat-card label="Total Campaigns" [value]="stats.totalCampaigns" icon="megaphone" color="amber"></app-stat-card>
+    <app-stat-card label="Total Placements" [value]="stats.totalPlacements" icon="layout-grid" color="violet"></app-stat-card>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <app-stat-card label="Total Impressions" [value]="stats.totalImpressions | number" icon="eye" color="indigo"></app-stat-card>
+    <app-stat-card label="Total Clicks" [value]="stats.totalClicks | number" icon="mouse-pointer-click" color="emerald"></app-stat-card>
+    <app-stat-card label="Platform Revenue" [value]="'$' + (stats.totalPlatformRevenue | number:'1.4-4')" icon="dollar-sign" color="rose"></app-stat-card>
+    <app-stat-card label="Network Revenue" [value]="'$' + (stats.totalNetworkRevenue | number:'1.4-4')" icon="trending-up" color="violet"></app-stat-card>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title mb-4">Revenue Distribution</h2>
+      <div class="space-y-6">
+        <div *ngFor="let item of revenueData" class="space-y-1">
+          <div class="flex justify-between text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <span>{{ item.name }}</span>
+            <span class="text-gray-900">\${{ item.value | number:'1.4-4' }}</span>
+          </div>
+          <div class="h-6 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 relative flex items-center px-1">
+            <div class="h-full bg-indigo-600 rounded transition-all" [style.width.%]="item.percentage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-6">
+      <h2 class="section-title mb-4">Platform Summary</h2>
+      <div class="space-y-4">
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-gray-600">Click-through Rate</span>
+            <span class="font-semibold text-gray-900">{{ ctrPercentage }}</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-indigo-500 rounded-full transition-all" [style.width.%]="ctrBarVal"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-gray-600">Campaigns per User</span>
+            <span class="font-semibold text-gray-900">{{ campaignsPerUser }}</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-500 rounded-full transition-all" [style.width.%]="campaignsPerUserBarVal"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-gray-600">Placements per Website</span>
+            <span class="font-semibold text-gray-900">{{ placementsPerWebsite }}</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-500 rounded-full transition-all" [style.width.%]="placementsPerWebsiteBarVal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
