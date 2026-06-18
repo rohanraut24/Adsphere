@@ -20,7 +20,7 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        seedSuperAdmin("admin@adsphere.com", "Admin123!", "Super Admin");
+        seedSuperAdmin("admin@adsphere.com", "Admin1234", "Super Admin");
     }
 
     private void seedSuperAdmin(String email, String password, String fullName) {
